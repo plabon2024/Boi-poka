@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { useLoaderData, useParams } from "react-router";
 
 const Bookdetails = () => {
@@ -17,21 +18,41 @@ const Bookdetails = () => {
     review,
     rating,
   } = singleBook || {};
-  console.log(singleBook);
+
+  const navigate = useNavigate();
+  const handlenav = (singleBook) => {
+    const existing = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const isAlreadyBookmarked = existing.find(
+      (book) => book.bookId === singleBook.bookId
+    );
+
+    if (!isAlreadyBookmarked) {
+      existing.push(singleBook);
+      localStorage.setItem("bookmarks", JSON.stringify(existing));
+    }
+    else{
+      alert("already esist !")
+    }
+
+    navigate("/wishlist");
+  };
+
   return (
     <>
       <div className="container mx-auto my-36">
-        <div className="flex">
+        <div className="flex justify-center">
           <div className="rounded bg-slate-200 p-20">
             <img className="w-48" src={image} alt={bookName} />
           </div>
+
+          {/* aside */}
           <div className="p-5">
             <h2 className="font-bold text-2xl py-5">{bookName}</h2>
             <h3 className="font-semibold py-2">By:{author}</h3>
             <div className="border-t-[0.5px] border-dashed w-3/5"></div>
             <h3 className="font-semibold py-2">{category}</h3>
             <div className="border-t-[0.5px] border-dashed w-3/5"></div>
-            <h3 className="p-2 w-3/5 ">
+            <h3 className="p-2 w-3/5">
               <span className="font-bold">Review:</span>
               {review}
             </h3>
@@ -74,7 +95,10 @@ const Bookdetails = () => {
               <button className="btn bg-white text-black border-[#e5e5e5]">
                 Mark as read
               </button>
-              <button className="btn mx-3 bg-[#FF9900] text-black border-[#e17d00]">
+              <button
+                onClick={() => handlenav(singleBook)}
+                className="btn mx-3 bg-[#FF9900] text-black border-[#e17d00]"
+              >
                 Add to Bookmark
               </button>
             </div>
