@@ -34,7 +34,7 @@ const Bookdetails = () => {
       alert("already esist !")
     }
 
-    navigate("/wishlist");
+    navigate("/readlist");
   };
 
   return (

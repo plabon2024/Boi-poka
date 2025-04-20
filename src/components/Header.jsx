@@ -22,6 +22,9 @@ const Header = () => {
           <NavLink to="books" className="link link-hover">
             Books
           </NavLink>
+          <NavLink to="/readlist" className="link link-hover">
+            Readlist
+          </NavLink>
         </nav>
 
         <div className="flex-none">
